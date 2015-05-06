@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk7.Jdk7Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Multimap;
 import com.google.common.io.ByteSource;
 import jsondemo.service.UpdateService;
 import org.springframework.batch.item.ItemWriter;
@@ -29,9 +27,7 @@ public class DummyWriter implements ItemWriter<Map<String,String>> {
     public void write(List<? extends Map<String, String>> list) throws Exception {
 
         ByteSource bs = createTempQuerySource((List<Map<String, String>>) list);
-        //this will likely read the entire chunk into memory,   probably want to see
-        //if it can be streamed from the file.
-        service.dosomething(bs.read());
+        service.dosomething(bs);
 ;
     }
 
