@@ -26,9 +26,10 @@ public class DummyWriter implements ItemWriter<Map<String,String>> {
     @Override
     public void write(List<? extends Map<String, String>> list) throws Exception {
 
-        ByteSource bs = createTempQuerySource((List<Map<String, String>>) list);
-        service.dosomething(bs);
-;
+        File file = createTempQuerySource((List<Map<String, String>>) list);
+        service.dosomething(com.google.common.io.Files.asByteSource(file));
+        file.delete();
+
     }
 
 
@@ -41,7 +42,7 @@ public class DummyWriter implements ItemWriter<Map<String,String>> {
     }
 
 
-    private ByteSource createTempQuerySource(final List<Map<String, String>> queryRecords) {
+    private File createTempQuerySource(final List<Map<String, String>> queryRecords) {
         final ObjectMapper mapper = generateDefaultObjectMapper();
         final Path tmp;
         try {
@@ -55,7 +56,7 @@ public class DummyWriter implements ItemWriter<Map<String,String>> {
         } catch (IOException ioe) {
             throw new UncheckedIOException(ioe);
         }
-        return com.google.common.io.Files.asByteSource(tmp.toFile());
+        return tmp.toFile();
     }
 
 
