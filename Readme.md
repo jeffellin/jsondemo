@@ -13,3 +13,7 @@ Does Nothing,  passes onto ItemWriter
 
 ##ItemWriter
 Calls the Tamr API via REST. Records will be put in batch based on the configured chunk size.
+
+
+###JobRequestTransformer
+Spring Integration event to convert an incoming file to a new Job Request.
